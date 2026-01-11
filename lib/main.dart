@@ -5,8 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'screens/onboarding.dart';
 import 'screens/home.dart';
 import 'screens/detail.dart';
+import 'screens/login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+
+  GoogleFonts.config.allowRuntimeFetching = true;
+  
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -21,13 +27,14 @@ class MyApp extends StatelessWidget {
       textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
     );
 
-    // Start at onboarding by default. Use '/home' only for quick dev checks.
+
     return MaterialApp(
       title: 'Pet Adoption',
       theme: theme,
       initialRoute: '/',
       routes: {
         '/': (_) => const OnboardingScreen(),
+        '/login': (_) => const LoginScreen(),
         '/home': (_) => const HomeScreen(),
         '/detail': (ctx) => const PetDetailPage(),
       },

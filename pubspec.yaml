@@ -38,6 +38,9 @@ dependencies:
   google_fonts: ^5.0.0
   dotted_border: ^2.0.0+1
   transparent_image: ^2.0.0
+  supabase_flutter: ^2.3.4
+  http: ^1.2.0
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

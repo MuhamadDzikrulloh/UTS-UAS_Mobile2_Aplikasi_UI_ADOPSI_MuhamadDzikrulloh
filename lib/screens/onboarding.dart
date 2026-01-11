@@ -8,12 +8,9 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFF7A21), // orange
+      backgroundColor: const Color(0xFFFF7A21),
       body: Stack(
         children: [
-          // =======================================
-          // PAW ICONS
-          // =======================================
           Positioned(
             top: 80,
             left: 40,
@@ -39,7 +36,6 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
 
-          // extra decorative paws
           Positioned(
             top: 20,
             right: 120,
@@ -66,16 +62,13 @@ class OnboardingScreen extends StatelessWidget {
             child: Opacity(opacity: 0.06, child: Icon(Icons.pets, size: 72, color: Colors.white)),
           ),
 
-          // =======================================
-          // GAMBAR KUCING (NETWORK VERSION)
-          // =======================================
-            Positioned(
+          Positioned(
               top: 100,
             left: 0,
             right: 0,
             child: Center(
               child: Image.asset(
-                "assets/images/image1.png", // gambar kucing online
+                "assets/images/image1.png",
                 height: 500,
                 width: 700,
                 fit: BoxFit.contain,
@@ -83,9 +76,6 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
 
-          // =======================================
-          // WAVE PUTIH BESAR
-          // =======================================
           Positioned(
             bottom: 0,
             left: 0,
@@ -99,9 +89,6 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
 
-          // =======================================
-          // TEXT + BUTTON
-          // =======================================
           Positioned(
             bottom: 100,
             left: 0,
@@ -145,12 +132,11 @@ class OnboardingScreen extends StatelessWidget {
     );
   }
 
-  // BUTTON DENGAN DASHED BORDER
   Widget _dashedButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
         debugPrint('Onboarding: Get Started tapped');
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/login');
       },
       child: DottedBorder(
         dashPattern: const [6, 6],
@@ -168,7 +154,6 @@ class OnboardingScreen extends StatelessWidget {
           child: Stack(
             alignment: Alignment.centerLeft,
             children: [
-              // left orange capsule that slightly overflows
               Positioned(
                 left: -18,
                 child: Container(
@@ -188,7 +173,6 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ),
 
-              // concentric rings + paw
               Positioned(
                 left: 6,
                 child: Container(
@@ -198,7 +182,6 @@ class OnboardingScreen extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // outer white ring
                       Container(
                         width: 48,
                         height: 48,
@@ -208,7 +191,6 @@ class OnboardingScreen extends StatelessWidget {
                           border: Border.all(color: const Color(0xFFFF7A21), width: 3),
                         ),
                       ),
-                      // inner orange circle
                       Container(
                         width: 34,
                         height: 34,
@@ -225,7 +207,6 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ),
 
-              // label text
               Positioned(
                 left: 100,
                 right: 20,
@@ -274,9 +255,6 @@ class BottomWaveClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
 
-// =======================================================
-// DASHED BORDER
-// =======================================================
 class DashedBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

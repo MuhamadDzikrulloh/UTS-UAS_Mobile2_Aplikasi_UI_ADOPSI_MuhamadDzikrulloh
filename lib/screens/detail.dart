@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/pet_provider.dart';
 
-class PetDetailPage extends StatefulWidget {
+class PetDetailPage extends ConsumerStatefulWidget {
   final String image;
   final String name;
   final String age;
   final String weight;
   final String about;
+  final int? petId;
 
   const PetDetailPage({
     super.key,
@@ -15,17 +18,19 @@ class PetDetailPage extends StatefulWidget {
     this.weight = '4.5',
     this.about =
         'Charlie is fully vaccinated, friendly, and very playful. He loves people and learns commands quickly.',
+    this.petId,
   });
 
   @override
-  State<PetDetailPage> createState() => _PetDetailPageState();
+  ConsumerState<PetDetailPage> createState() => _PetDetailPageState();
 }
 
-class _PetDetailPageState extends State<PetDetailPage> {
-  bool isFavorite = false;
-
+class _PetDetailPageState extends ConsumerState<PetDetailPage> {
   @override
   Widget build(BuildContext context) {
+    final favorites = ref.watch(favoritesProvider);
+    final isFavorite = widget.petId != null && favorites.contains(widget.petId!);
+
     return Scaffold(
       backgroundColor: const Color(0xfff4f4f4),
       appBar: AppBar(
@@ -43,7 +48,9 @@ class _PetDetailPageState extends State<PetDetailPage> {
               size: 28,
             ),
             onPressed: () {
-              setState(() => isFavorite = !isFavorite);
+              if (widget.petId != null) {
+                ref.read(favoritesProvider.notifier).toggle(widget.petId!);
+              }
             },
           ),
         ],
@@ -125,8 +132,22 @@ class _PetDetailPageState extends State<PetDetailPage> {
 
                     // BOTTOM BUTTON
                     GestureDetector(
-                      onTap: () {
-                        // future: handle adoption flow
+                      onTap: () async {
+                        if (widget.petId != null) {
+                          try {
+                            await ref.read(petsProvider.notifier).adoptPet(widget.petId!);
+                            if (!context.mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Adopsi berhasil')), 
+                            );
+                            Navigator.of(context).pop();
+                          } catch (e) {
+                            if (!context.mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Gagal adopsi: $e')),
+                            );
+                          }
+                        }
                       },
                       child: Container(
                         height: 60,
